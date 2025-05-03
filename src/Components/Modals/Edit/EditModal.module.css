@@ -1,0 +1,81 @@
+.edit-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem;
+    overflow-y: auto;
+  }
+  
+  .edit-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(156, 163, 175, 0.5);
+    backdrop-filter: blur(4px);
+  }
+  
+  .edit-modal-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 48rem;
+    margin-top: 5rem;
+    background-color: #fff;
+    border-radius: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .edit-modal-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  .edit-modal-grid {
+    /* display: grid; */
+    gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  @media (min-width: 640px) {
+    .edit-modal-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .edit-modal-field {
+    grid-column: span 2;
+  }
+  
+  .edit-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .edit-close-btn,
+  .edit-save-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  
+  .edit-close-btn {
+    background-color: #f3f4f6;
+    color: #374151;
+    border-color: #d1d5db;
+  }
+  
+  .edit-save-btn {
+    background-color: #10b981;
+    color: white;
+  }
+  

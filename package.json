@@ -1,0 +1,50 @@
+{
+  "name": "react-crudx-table",
+  "version": "1.0.0",
+  "description": "Make npm CRUD design with this package simply",
+  "author": "Prodip Roy",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist",
+    "src",
+    "*.css"
+  ],
+  "keywords": [
+    "react",
+    "table",
+    "crud",
+    "component",
+    "dynamic",
+    "npm-package"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "react-icons": "^5.5.0",
+    "tailwindcss": "^4.1.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/plugin-transform-react-jsx": "^7.27.1",
+    "@babel/preset-env": "^7.27.1",
+    "@babel/preset-react": "^7.27.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "postcss": "^8.5.3",
+    "rollup": "^4.40.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}

@@ -1,0 +1,78 @@
+.textarea-group {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .textarea-label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151; /* gray-700 */
+  }
+  
+  .textarea-required {
+    color: #ef4444; /* red-500 */
+    margin-left: 0.25rem;
+  }
+  
+  .textarea-element {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    border: 1.5px solid #d1d5db; /* stroke */
+    background-color: transparent;
+    color: #111827;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .textarea-element:focus,
+  .textarea-element:active {
+    border-color: #3b82f6; /* primary */
+    box-shadow: 0 0 0 1px #3b82f6;
+  }
+  
+  .textarea-element:disabled {
+    cursor: default;
+    background-color: #f9fafb; /* light mode disabled background */
+  }
+  
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .textarea-label {
+      color: #6976a9; /* gray-400 */
+    }
+  
+    .textarea-element {
+      background-color: #fff; /* form-input dark */
+      color: #6976a9;
+      border-color: rgb(234 240 247); /* form-stroke dark */
+    }
+  
+    .textarea-element:focus {
+      border-color: #3b82f6;
+    }
+  
+    .textarea-element:disabled {
+      background-color: #374151; /* dark disabled bg */
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .textarea-element {
+      font-size: 0.95rem;
+      padding: 0.65rem 1rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .textarea-element {
+      font-size: 0.9rem;
+      padding: 0.6rem 0.875rem;
+    }
+  }
+  

@@ -1,0 +1,32 @@
+.smartFilterWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  
+  .formFieldColumn {
+    flex: 1 1 25%;
+    padding: 0 0.5rem;
+    min-width: 200px;
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 1200px) {
+    .formFieldColumn {
+      flex: 1 1 33.33%;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .formFieldColumn {
+      flex: 1 1 50%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .formFieldColumn {
+      flex: 1 1 100%;
+    }
+  }
+  

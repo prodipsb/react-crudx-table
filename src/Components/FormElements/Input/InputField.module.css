@@ -1,0 +1,67 @@
+.input-field-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .input-label {
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6976a9; /* text-gray-700 */
+  }
+  
+  .input-required {
+    color: #ef4444; /* red-500 like text-meta-1 */
+  }
+  
+  .input-element {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db; /* border-stroke (gray-300) */
+    background-color: #ffffff;
+    color: #6976a9; /* text-gray-900 */
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .input-element:focus {
+    border-color: #3b82f6; /* focus:border-primary (blue-500) */
+    box-shadow: 0 0 0 1px #3b82f6;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .input-label {
+      color: #6976a9; /* text-gray-400 */
+    }
+  
+    .input-element {
+      background-color: 'transparent'; /* form-input background dark */
+      color: #6976a9;
+      border-color: rgb(234 240 247); /* dark border-form-strokedark */
+    }
+  
+    .input-element:focus {
+      border-color: #3b82f6; /* dark:focus:border-primary */
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+  }
+  
+  /* Responsive behavior */
+  @media screen and (max-width: 768px) {
+    .input-element {
+      font-size: 0.95rem;
+      padding: 0.65rem 1rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .input-element {
+      font-size: 0.9rem;
+      padding: 0.6rem 0.875rem;
+    }
+  }
+  
