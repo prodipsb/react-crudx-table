@@ -1,5 +1,5 @@
 import React from 'react';
-import './CloseBtn.module.css'; // Import custom styles
+import styles from './CloseBtn.module.css'; // Import custom styles
 
 const CloseBtn = ({
   onClick = () => {},
@@ -9,10 +9,10 @@ const CloseBtn = ({
     <div>
       <button
         onClick={onClick}
-        className={`close-btn ${className}`}
+        className={`${styles.closeBtn} ${className}`}
       >
         <svg
-          className="close-btn-icon"
+          className={styles.closeBtnIcon}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

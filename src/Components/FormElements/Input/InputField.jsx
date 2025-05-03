@@ -1,5 +1,5 @@
 import React from "react";
-import "./InputField.module.css"; // Import updated CSS
+import styles from "./InputField.module.css";
 
 const InputField = ({ 
   type, 
@@ -12,10 +12,10 @@ const InputField = ({
   required = false 
 }) => {
   return (
-    <div className={`input-field-container ${className}`}>
-      <label className="input-label">
+    <div className={`${styles.inputFieldContainer} ${className}`}>
+      <label className={styles.inputLabel}>
         {label}
-        {required && <span className="input-required"> *</span>}
+        {required && <span className={styles.inputRequired}> *</span>}
       </label>
       <input
         type={type}
@@ -24,7 +24,7 @@ const InputField = ({
         placeholder={placeholder}
         onChange={onChange}
         required={required}
-        className="input-element"
+        className={styles.inputElement}
       />
     </div>
   );

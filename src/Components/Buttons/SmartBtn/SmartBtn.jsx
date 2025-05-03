@@ -1,7 +1,7 @@
 import React from 'react';
-import './SmartBtn.module.css'; // Custom button styles
+import styles from './SmartBtn.module.css';
 
-const SmartBtn = ({
+const SmartButton = ({
   label = 'Click Me',
   href = '#',
   type = 'button',
@@ -10,11 +10,11 @@ const SmartBtn = ({
   onClick = () => {},
   isLink = true,
 }) => {
-  const finalClass = `smart-btn ${className}`;
+  const finalClass = `${styles.smartBtn} ${className}`;
 
   const content = (
     <>
-      {icon && <span className="smart-btn-icon">{icon}</span>}
+      {icon && <span className={styles.smartBtnIcon}>{icon}</span>}
       {label}
     </>
   );
@@ -34,4 +34,4 @@ const SmartBtn = ({
   );
 };
 
-export default SmartBtn;
+export default SmartButton;

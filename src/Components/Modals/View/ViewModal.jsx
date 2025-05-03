@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./ViewModal.module.css";
+import styles from "./ViewModal.module.css";  // Import the CSS Module
 
 const ViewModal = ({ 
   selectedItem, 
@@ -14,6 +14,7 @@ const ViewModal = ({
     englishShort: "",
     status: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (selectedItem) {
@@ -28,48 +29,75 @@ const ViewModal = ({
     }
   }, [selectedItem]);
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSave = () => {
+    // Add any save logic here
+    console.log("Saved formData:", formData);
+    setIsEditing(false); // Disable editing after save
+  };
+
   return (
     <>
       {isViewOpen && (
-        <div className="modal-overlay">
-          {/* Backdrop */}
-          <div className="modal-backdrop" onClick={closeView} />
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalBackdrop} onClick={closeView} />
 
-          {/* Modal Content */}
-          <div className="modal-container">
-            {/* Close Button */}
-            <button onClick={closeView} className="modal-close">
-              <svg className="modal-close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className={styles.modalContainer}>
+            <button onClick={closeView} className={styles.modalClose}>
+              <svg className={styles.modalCloseIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
 
-            {/* Modal Form */}
             <form>
-              <h4 className="modal-title">
+              <h4 className={styles.modalTitle}>
                 {editFields?.label}
               </h4>
 
-              <div className="modal-grid">
+              <div className={styles.modalGrid}>
                 {editFields?.fields?.map((formField, index) => (
-                  <div className="modal-field" key={index}>
-                    <label className="modal-label">
+                  <div className={styles.modalField} key={index}>
+                    <label className={styles.modalLabel}>
                       {formField?.label}
                     </label>
-                    <p>{formData?.[formField?.key] ?? ""}</p>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name={formField?.key}
+                        value={formData?.[formField?.key] ?? ""}
+                        onChange={handleChange}
+                        className={styles.modalInput}
+                      />
+                    ) : (
+                      <p className={styles.modalInput}>{formData?.[formField?.key] ?? ""}</p>
+                    )}
                   </div>
                 ))}
               </div>
 
-              {/* Footer Buttons */}
-              <div className="modal-footer">
+              <div className={styles.modalFooter}>
                 <button
                   type="button"
                   onClick={closeView}
-                  className="modal-close-btn"
+                  className={styles.modalCloseBtn}
                 >
                   Close
                 </button>
+                {isEditing && (
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className={styles.modalSaveBtn}
+                  >
+                    Save
+                  </button>
+                )}
               </div>
             </form>
           </div>

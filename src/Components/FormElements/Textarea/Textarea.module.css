@@ -1,78 +1,77 @@
-.textarea-group {
-    width: 100%;
-    margin-bottom: 1rem;
+.textareaGroup {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.textareaLabel {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.textareaRequired {
+  color: #ef4444;
+  margin-left: 0.25rem;
+}
+
+.textareaElement {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  font-size: .9rem;
+  border-radius: 0.375rem;
+  border: 1.5px solid #d1d5db;
+  background-color: transparent;
+  color: #636c72;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.textareaElement:focus,
+.textareaElement:active {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.textareaElement:disabled {
+  cursor: default;
+  background-color: #f9fafb;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .textareaLabel {
+    color: #6976a9;
   }
-  
-  .textarea-label {
-    display: block;
-    margin-bottom: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151; /* gray-700 */
+
+  .textareaElement {
+    background-color: #fff;
+    color: #6976a9;
+    border-color: rgb(234 240 247);
   }
-  
-  .textarea-required {
-    color: #ef4444; /* red-500 */
-    margin-left: 0.25rem;
+
+  .textareaElement:focus {
+    border-color: #3b82f6;
   }
-  
-  .textarea-element {
-    width: 100%;
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
-    border-radius: 0.375rem;
-    border: 1.5px solid #d1d5db; /* stroke */
-    background-color: transparent;
-    color: #111827;
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  .textareaElement:disabled {
+    background-color: #374151;
   }
-  
-  .textarea-element:focus,
-  .textarea-element:active {
-    border-color: #3b82f6; /* primary */
-    box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .textareaElement {
+    font-size: 0.95rem;
+    padding: 0.65rem 1rem;
   }
-  
-  .textarea-element:disabled {
-    cursor: default;
-    background-color: #f9fafb; /* light mode disabled background */
+}
+
+@media screen and (max-width: 480px) {
+  .textareaElement {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.875rem;
   }
-  
-  /* Dark mode support */
-  @media (prefers-color-scheme: dark) {
-    .textarea-label {
-      color: #6976a9; /* gray-400 */
-    }
-  
-    .textarea-element {
-      background-color: #fff; /* form-input dark */
-      color: #6976a9;
-      border-color: rgb(234 240 247); /* form-stroke dark */
-    }
-  
-    .textarea-element:focus {
-      border-color: #3b82f6;
-    }
-  
-    .textarea-element:disabled {
-      background-color: #374151; /* dark disabled bg */
-    }
-  }
-  
-  /* Responsive adjustments */
-  @media screen and (max-width: 768px) {
-    .textarea-element {
-      font-size: 0.95rem;
-      padding: 0.65rem 1rem;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .textarea-element {
-      font-size: 0.9rem;
-      padding: 0.6rem 0.875rem;
-    }
-  }
-  
+}

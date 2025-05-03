@@ -3,12 +3,13 @@ import { AiFillDelete, AiFillEye, AiOutlinePlusCircle } from "react-icons/ai";
 import { FaUserSecret } from "react-icons/fa";
 import { TbEdit } from "react-icons/tb";
 import { VscSettings } from "react-icons/vsc";
-import './CrudxTable.module.css';
+import styles from "./CrudxTable.module.css"; // ✅ Import as styles
 import ViewModal from "../Components/Modals/View/ViewModal";
 import EditModal from "../Components/Modals/Edit/EditModal";
 import DeleteModal from "../Components/Modals/Delete/DeleteModal";
 import SmartFilter from "../Components/Filters/SmartFilter/SmartFilter";
 import SmartButton from "../Components/Buttons/SmartBtn/SmartBtn";
+import Pagination from "./Pagination/Pagination";
 
 const CrudxTable = ({
   headers,
@@ -28,6 +29,8 @@ const CrudxTable = ({
   formData,
   setFormData,
   handleDeleteItem,
+  fetchData,
+  pagination,
 }) => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -53,13 +56,9 @@ const CrudxTable = ({
     setIsDeleteOpen(false);
   };
 
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-
   const handleClick = (name, data) => {
     if (name === "view") {
-      setSelectedItem(data); // store selected row data
+      setSelectedItem(data);
       setIsViewOpen(true);
     }
     if (name === "edit") {
@@ -71,13 +70,17 @@ const CrudxTable = ({
       setSelectedItem(data);
       setIsDeleteOpen(true);
     }
+    if (name === "role") {
+      setSelectedItem(data);
+      // Handle assign role logic here if needed
+    }
   };
 
   return (
-    <div className="custom-table-wrapper">
-      <div className="custom-table-scroll">
+    <div className={styles.customTableWrapper}>
+      <div className={styles.customTableScroll}>
         {addData && (
-          <div className="add-button-container">
+          <div className={styles.addButtonContainer}>
             <SmartButton
               label={addData.label}
               onClick={() => handleClick("edit")}
@@ -94,7 +97,7 @@ const CrudxTable = ({
           handleFilterChange={handleFilterChange}
         />
 
-        <table className="custom-table">
+        <table className={styles.customTable}>
           <thead>
             <tr>
               {headers?.map((header, index) => (
@@ -104,14 +107,16 @@ const CrudxTable = ({
           </thead>
           <tbody>
             {data?.map((tableData, index) => (
-              <tr key={index} className={index % 2 === 0 ? "alt-row" : ""}>
+              <tr key={index} className={index % 2 === 0 ? styles.altRow : ""}>
                 {headers?.map((header, i) => (
-                  <td className="text-cell" key={i}>
-                    <p className="capitalize">{tableData[header?.key]}</p>
+                  <td key={i}>
+                    <p className={styles.capitalize}>
+                      {tableData[header?.key]}
+                    </p>
                     {header?.key === "action" && (
-                      <div className="custom-action-buttons">
+                      <div className={styles.customActionButtons}>
                         {settings && (
-                          <span className="custom-action-icon">
+                          <span className={styles.customActionIcon}>
                             <VscSettings
                               size={20}
                               onClick={() => handleClick("settings", tableData)}
@@ -119,7 +124,7 @@ const CrudxTable = ({
                           </span>
                         )}
                         {viewData && (
-                          <span className="custom-action-icon">
+                          <span className={styles.customActionIcon}>
                             <AiFillEye
                               size={20}
                               onClick={() => handleClick("view", tableData)}
@@ -127,7 +132,7 @@ const CrudxTable = ({
                           </span>
                         )}
                         {editData && (
-                          <span className="custom-action-icon">
+                          <span className={styles.customActionIcon}>
                             <TbEdit
                               size={20}
                               onClick={() => handleClick("edit", tableData)}
@@ -135,7 +140,7 @@ const CrudxTable = ({
                           </span>
                         )}
                         {deleteData && (
-                          <span className="custom-action-icon">
+                          <span className={styles.customActionIcon}>
                             <AiFillDelete
                               size={20}
                               onClick={() => handleClick("delete", tableData)}
@@ -143,7 +148,7 @@ const CrudxTable = ({
                           </span>
                         )}
                         {assignRole && (
-                          <span className="custom-action-icon">
+                          <span className={styles.customActionIcon}>
                             <FaUserSecret
                               size={20}
                               onClick={() => handleClick("role", tableData)}
@@ -158,6 +163,10 @@ const CrudxTable = ({
             ))}
           </tbody>
         </table>
+
+        {pagination && (
+          <Pagination pagination={pagination} fetchData={fetchData} />
+        )}
 
         {isViewOpen && (
           <ViewModal

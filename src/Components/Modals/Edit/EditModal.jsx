@@ -4,7 +4,7 @@ import TextArea from "../../FormElements/Textarea/TextArea";
 import InputField from "../../FormElements/Input/InputField";
 import SmartButton from "../../Buttons/SmartBtn/SmartBtn";
 import CloseBtn from "../../Buttons/CloseBtn/CloseBtn";
-import "./EditModal.module.css";
+import styles from "./EditModal.module.css";
 
 const EditModal = ({
   editFields,
@@ -25,18 +25,16 @@ const EditModal = ({
   return (
     <>
       {isEditOpen && (
-        <div className="edit-modal-overlay">
-          {/* Backdrop */}
-          <div className="edit-modal-backdrop" onClick={closeEdit} />
+        <div className={styles.editModalOverlay}>
+          <div className={styles.editModalBackdrop} onClick={closeEdit} />
 
-          {/* Modal Content */}
-          <div className="edit-modal-container">
+          <div className={styles.editModalContainer}>
             <CloseBtn onClick={closeEdit} />
 
             <form onSubmit={handleSubmit}>
-              <h4 className="edit-modal-title">{editFields?.label}</h4>
+              <h4 className={styles.editModalTitle}>{editFields?.label}</h4>
 
-              <div className="edit-modal-grid">
+              <div className={styles.editModalGrid}>
                 {editFields?.fields?.map((formField, index) => {
                   const sharedProps = {
                     key: index,
@@ -48,44 +46,29 @@ const EditModal = ({
                     label: formField?.label,
                   };
 
-                  if (formField?.type === "text") {
-                    return (
-                      <div className="edit-modal-field" key={index}>
+                  return (
+                    <div className={styles.editModalField} key={index}>
+                      {formField?.type === "text" && (
                         <InputField type="text" {...sharedProps} />
-                      </div>
-                    );
-                  }
-
-                  if (formField?.type === "select") {
-                    return (
-                      <div className="edit-modal-field" key={index}>
-                        <SelectGroup
-                          {...sharedProps}
-                          options={formField?.options}
-                        />
-                      </div>
-                    );
-                  }
-
-                  if (formField?.type === "textarea") {
-                    return (
-                      <div className="edit-modal-field" key={index}>
+                      )}
+                      {formField?.type === "select" && (
+                        <SelectGroup {...sharedProps} options={formField?.options} />
+                      )}
+                      {formField?.type === "textarea" && (
                         <TextArea rows={formField?.rows} {...sharedProps} />
-                      </div>
-                    );
-                  }
-
-                  return null;
+                      )}
+                    </div>
+                  );
                 })}
               </div>
 
-              <div className="edit-modal-footer">
+              <div className={styles.editModalFooter}>
                 <SmartButton
                   label="Close"
                   type="button"
                   onClick={closeEdit}
                   isLink={false}
-                  className="edit-close-btn"
+                  className={styles.editCloseBtn}
                 />
 
                 <SmartButton
@@ -93,7 +76,7 @@ const EditModal = ({
                   type="submit"
                   onClick={handleSubmit}
                   isLink={false}
-                  className="edit-save-btn"
+                  className={styles.editSaveBtn}
                 />
               </div>
             </form>

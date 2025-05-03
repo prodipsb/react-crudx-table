@@ -1,5 +1,5 @@
 import React from "react";
-import "./Textarea.module.css"; // Import custom styles
+import styles from "./Textarea.module.css";
 
 const TextArea = ({
   name,
@@ -12,11 +12,11 @@ const TextArea = ({
   label,
 }) => {
   return (
-    <div className={`textarea-group ${className}`}>
+    <div className={`${styles.textareaGroup} ${className}`}>
       {label && (
-        <label className="textarea-label">
+        <label className={styles.textareaLabel}>
           {label}
-          {required && <span className="textarea-required">*</span>}
+          {required && <span className={styles.textareaRequired}>*</span>}
         </label>
       )}
       <textarea
@@ -26,7 +26,7 @@ const TextArea = ({
         onChange={onChange}
         rows={rows}
         required={required}
-        className="textarea-element"
+        className={styles.textareaElement}
       />
     </div>
   );

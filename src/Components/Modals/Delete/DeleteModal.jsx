@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./DeleteModal.module.css";
+import styles from "./DeleteModal.module.css";  // Import the CSS Module
 
 const DeleteModal = ({ selectedItem, isDeleteOpen, closeDelete, onDelete }) => {
   const [item, setItem] = useState(null);
@@ -30,33 +30,33 @@ const DeleteModal = ({ selectedItem, isDeleteOpen, closeDelete, onDelete }) => {
   if (!isDeleteOpen) return null;
 
   return (
-    <div className="modal-overlay" role="dialog" aria-modal="true">
-      <div className="modal-container">
+    <div className={styles.modalOverlay} role="dialog" aria-modal="true">
+      <div className={styles.modalContainer}>
         <button
           onClick={closeDelete}
           aria-label="Close modal"
-          className="close-button"
+          className={styles.closeButton}
         >
           &times;
         </button>
 
-        <div className="modal-content">
-          <div className="icon-wrapper">
-            <div className="icon-background"></div>
-            <div className="icon-cross"></div>
+        <div className={styles.modalContent}>
+          <div className={styles.iconWrapper}>
+            <div className={styles.iconBackground}></div>
+            <div className={styles.iconCross}></div>
           </div>
 
-          <h4 className="modal-title">Confirm Delete</h4>
-          <p className="modal-text">
+          <h4 className={styles.modalTitle}>Confirm Delete</h4>
+          <p className={styles.modalText}>
             Are you sure you want to delete{" "}
             <strong>{item?.englishShort || "this item"}</strong>?
           </p>
 
-          <div className="modal-actions">
-            <button type="button" onClick={handleDelete} className="btn-delete">
+          <div className={styles.modalActions}>
+            <button type="button" onClick={handleDelete} className={styles.btnDelete}>
               Yes, Delete
             </button>
-            <button type="button" onClick={closeDelete} className="btn-cancel">
+            <button type="button" onClick={closeDelete} className={styles.btnCancel}>
               Cancel
             </button>
           </div>

@@ -1,0 +1,78 @@
+/* Pagination.module.css */
+.paginationContainer {
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+}
+
+.paginationWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.paginationButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #636c72;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.paginationButton:hover {
+  background-color: #f3f4f6;
+}
+
+.paginationButton.disabled {
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+  color: #a1a1aa;
+}
+
+.pageNumberList {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pageNumberItem {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pageNumberItem.active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.pageNumberItem:hover:not(.active) {
+  background-color: #e0e7ff;
+  color: #3b82f6;
+}
+
+.pageInfo {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.arrowIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}

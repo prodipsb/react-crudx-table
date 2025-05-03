@@ -1,5 +1,5 @@
 import React from "react";
-import "./SelectGroup.module.css"; // Import custom styles
+import styles from "./SelectGroup.module.css"; // Correct import using CSS Modules
 
 const SelectGroup = ({
   label,
@@ -11,18 +11,18 @@ const SelectGroup = ({
   required = false,
 }) => {
   return (
-    <div className="select-group-container">
-      <label className="select-label">
+    <div className={styles.selectGroupContainer}>
+      <label className={styles.selectLabel}>
         {label}
-        {required && <span className="select-required"> *</span>}
+        {required && <span className={styles.selectRequired}> *</span>}
       </label>
 
-      <div className="select-wrapper">
+      <div className={styles.selectWrapper}>
         <select
           name={name}
           value={value ?? ""}
           onChange={onChange}
-          className="select-element"
+          className={styles.selectElement}
         >
           <option value="" disabled>
             {placeholder}

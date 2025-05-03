@@ -1,133 +1,133 @@
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(6px);
-    padding: 1rem;
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  padding: 1rem;
+}
+
+.modalContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.modalContent {
+  text-align: center;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1.5rem;
+}
+
+.iconBackground {
+  width: 100%;
+  height: 100%;
+  background-color: #fdd;
+  border-radius: 50%;
+}
+
+.iconCross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg fill='red' viewBox='0 0 38 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.6 11.7c-.6-.6-.6-1.6 0-2.2s1.6-.6 2.2 0l7.2 7.2 7.2-7.2c.6-.6 1.6-.6 2.2 0s.6 1.6 0 2.2l-7.2 7.2 7.2 7.2c.6.6.6 1.6 0 2.2s-1.6.6-2.2 0l-7.2-7.2-7.2 7.2c-.6.6-1.6.6-2.2 0s-.6-1.6 0-2.2l7.2-7.2-7.2-7.2z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: translate(-50%, -50%);
+}
+
+.modalTitle {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.modalText {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btnDelete {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btnDelete:hover {
+  background-color: #d32f2f;
+}
+
+.btnCancel {
+  background-color: #42a5f5;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btnCancel:hover {
+  background-color: #64b5f6;
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+  .modalContainer {
+    padding: 1.5rem;
   }
-  
-  .modal-container {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    background: white;
-    border-radius: 24px;
-    padding: 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+
+  .modalTitle {
     font-size: 1.5rem;
-    background: #f0f0f0;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
   }
-  
-  .modal-content {
-    text-align: center;
+
+  .modalText {
+    font-size: 0.9rem;
   }
-  
-  .icon-wrapper {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 1.5rem;
+
+  .modalActions {
+    flex-direction: column;
+    align-items: stretch;
   }
-  
-  .icon-background {
-    width: 100%;
-    height: 100%;
-    background-color: #fdd;
-    border-radius: 50%;
-  }
-  
-  .icon-cross {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 38px;
-    height: 38px;
-    background-image: url("data:image/svg+xml,%3Csvg fill='red' viewBox='0 0 38 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.6 11.7c-.6-.6-.6-1.6 0-2.2s1.6-.6 2.2 0l7.2 7.2 7.2-7.2c.6-.6 1.6-.6 2.2 0s.6 1.6 0 2.2l-7.2 7.2 7.2 7.2c.6.6.6 1.6 0 2.2s-1.6.6-2.2 0l-7.2-7.2-7.2 7.2c-.6.6-1.6.6-2.2 0s-.6-1.6 0-2.2l7.2-7.2-7.2-7.2z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform: translate(-50%, -50%);
-  }
-  
-  .modal-title {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-    color: #333;
-  }
-  
-  .modal-text {
-    color: #666;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  
-  .modal-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
-  .btn-delete {
-    background-color: #e53935;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  
-  .btn-delete:hover {
-    background-color: #d32f2f;
-  }
-  
-  .btn-cancel {
-    background-color: #42a5f5;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  
-  .btn-cancel:hover {
-    background-color: #64b5f6;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 640px) {
-    .modal-container {
-      padding: 1.5rem;
-    }
-  
-    .modal-title {
-      font-size: 1.5rem;
-    }
-  
-    .modal-text {
-      font-size: 0.9rem;
-    }
-  
-    .modal-actions {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  }
-  
+}
