@@ -5,7 +5,7 @@ const ViewModal = ({
   selectedItem, 
   isViewOpen, 
   closeView,
-  editFields
+  formFields
 }) => {
   const [formData, setFormData] = useState({
     productId: "",
@@ -57,11 +57,11 @@ const ViewModal = ({
 
             <form>
               <h4 className={styles.modalTitle}>
-                {editFields?.label}
+                {formFields?.label}
               </h4>
 
               <div className={styles.modalGrid}>
-                {editFields?.fields?.map((formField, index) => (
+                {formFields?.fields?.map((formField, index) => (
                   <div className={styles.modalField} key={index}>
                     <label className={styles.modalLabel}>
                       {formField?.label}

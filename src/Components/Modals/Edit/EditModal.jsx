@@ -7,7 +7,7 @@ import CloseBtn from "../../Buttons/CloseBtn/CloseBtn";
 import styles from "./EditModal.module.css";
 
 const EditModal = ({
-  editFields,
+  formFields,
   isEditOpen,
   closeEdit,
   handleSubmit,
@@ -32,10 +32,10 @@ const EditModal = ({
             <CloseBtn onClick={closeEdit} />
 
             <form onSubmit={handleSubmit}>
-              <h4 className={styles.editModalTitle}>{editFields?.label}</h4>
+              <h4 className={styles.editModalTitle}>{formFields?.label}</h4>
 
               <div className={styles.editModalGrid}>
-                {editFields?.fields?.map((formField, index) => {
+                {formFields?.fields?.map((formField, index) => {
                   const sharedProps = {
                     key: index,
                     name: formField?.key,

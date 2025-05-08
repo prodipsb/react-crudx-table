@@ -12,22 +12,21 @@ import SmartButton from "../Components/Buttons/SmartBtn/SmartBtn";
 import Pagination from "./Pagination/Pagination";
 
 const CrudxTable = ({
-  headers,
-  editFields,
+  columns,
+  data,
+  addData,
+  formFields,
+  filters,
   filterInputFields,
   handleFilterChange,
-  data,
-  filters,
-  settings,
-  viewData,
-  editData,
-  deleteData,
-  addData,
-  modalStatus,
-  assignRole,
-  handleSubmit,
+  viewBtn,
+  editBtn,
+  deleteBtn,
+  settingBtn,
+  customBtn,
   formData,
   setFormData,
+  handleSubmit,
   handleDeleteItem,
   fetchData,
   pagination,
@@ -36,10 +35,6 @@ const CrudxTable = ({
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
-  useEffect(() => {
-    setIsEditOpen(modalStatus);
-  }, [modalStatus]);
 
   const closeView = () => {
     setIsViewOpen(false);
@@ -100,22 +95,33 @@ const CrudxTable = ({
         <table className={styles.customTable}>
           <thead>
             <tr>
-              {headers?.map((header, index) => (
-                <th key={index}>{header?.label}</th>
+              {columns?.map((column, index) => (
+                <th key={index}>{column?.label}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {data?.map((tableData, index) => (
               <tr key={index} className={index % 2 === 0 ? styles.altRow : ""}>
-                {headers?.map((header, i) => (
+                {columns?.map((column, i) => (
                   <td key={i}>
-                    <p className={styles.capitalize}>
-                      {tableData[header?.key]}
+                    {column?.type == 'image' ? (
+
+                    <img src={tableData[column?.key]} width={column?.width} height={column?.height} className={column?.class}/>
+                     
+                    ) : (
+
+                      <p className={styles.capitalize}>
+                      {tableData[column?.key]}
                     </p>
-                    {header?.key === "action" && (
+
+                    )}
+                    
+                  
+                    
+                    {column?.key === "action" && (
                       <div className={styles.customActionButtons}>
-                        {settings && (
+                        {settingBtn && (
                           <span className={styles.customActionIcon}>
                             <VscSettings
                               size={20}
@@ -123,7 +129,7 @@ const CrudxTable = ({
                             />
                           </span>
                         )}
-                        {viewData && (
+                        {viewBtn && (
                           <span className={styles.customActionIcon}>
                             <AiFillEye
                               size={20}
@@ -131,7 +137,7 @@ const CrudxTable = ({
                             />
                           </span>
                         )}
-                        {editData && (
+                        {editBtn && (
                           <span className={styles.customActionIcon}>
                             <TbEdit
                               size={20}
@@ -139,7 +145,7 @@ const CrudxTable = ({
                             />
                           </span>
                         )}
-                        {deleteData && (
+                        {deleteBtn && (
                           <span className={styles.customActionIcon}>
                             <AiFillDelete
                               size={20}
@@ -147,11 +153,13 @@ const CrudxTable = ({
                             />
                           </span>
                         )}
-                        {assignRole && (
+                        {customBtn && customBtn.icon && (
                           <span className={styles.customActionIcon}>
-                            <FaUserSecret
+                            <customBtn.icon
                               size={20}
-                              onClick={() => handleClick("role", tableData)}
+                              onClick={() =>
+                                handleClick(customBtn.action, tableData)
+                              }
                             />
                           </span>
                         )}
@@ -171,7 +179,7 @@ const CrudxTable = ({
         {isViewOpen && (
           <ViewModal
             selectedItem={selectedItem}
-            editFields={editFields}
+            formFields={formFields}
             isViewOpen={isViewOpen}
             closeView={closeView}
           />
@@ -179,7 +187,7 @@ const CrudxTable = ({
 
         {isEditOpen && (
           <EditModal
-            editFields={editFields}
+            formFields={formFields}
             isEditOpen={isEditOpen}
             closeEdit={closeEdit}
             handleSubmit={handleSubmit}
