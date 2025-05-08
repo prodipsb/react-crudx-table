@@ -54,6 +54,7 @@ const CrudxTable = ({
   const closeEdit = () => {
     setIsEditOpen(false);
     setSelectedItem(null);
+    setFormData(null)
   };
 
   const closeDelete = () => {
