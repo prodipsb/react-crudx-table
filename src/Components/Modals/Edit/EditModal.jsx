@@ -5,6 +5,7 @@ import InputField from "../../FormElements/Input/InputField";
 import SmartButton from "../../Buttons/SmartBtn/SmartBtn";
 import CloseBtn from "../../Buttons/CloseBtn/CloseBtn";
 import styles from "./EditModal.module.css";
+import FileUploadField from "../../FormElements/File/FileUploadField";
 
 const EditModal = ({
   formFields,
@@ -15,10 +16,11 @@ const EditModal = ({
   setFormData,
 }) => {
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files, type } = e.target;
+    const newValue = type === "file" ? (files.length > 1 ? [...files] : files[0]) : value
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
@@ -52,10 +54,25 @@ const EditModal = ({
                         <InputField type="text" {...sharedProps} />
                       )}
                       {formField?.type === "select" && (
-                        <SelectGroup {...sharedProps} options={formField?.options} />
+                        <SelectGroup
+                          {...sharedProps}
+                          options={formField?.options}
+                        />
                       )}
                       {formField?.type === "textarea" && (
                         <TextArea rows={formField?.rows} {...sharedProps} />
+                      )}
+                      {formField?.type === "image" && (
+                        <FileUploadField
+                          name={formField?.key}
+                          label={formField?.label}
+                          required={formField?.required}
+                          value={formData?.[formField?.key] ?? ""}
+                          baseUrl={formField?.baseUrl ?? ""}
+                          onChange={handleInputChange}
+                          accept={formField?.accept || "*"}
+                          multiple={formField?.multiple || false}
+                        />
                       )}
                     </div>
                   );

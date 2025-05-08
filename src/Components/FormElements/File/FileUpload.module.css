@@ -1,0 +1,49 @@
+.inputFieldContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .inputLabel {
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6976a9;
+  }
+
+  .inputRequired {
+    color: #ef4444;
+  }
+
+  .uploadWrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .hiddenFileInput {
+    display: none;
+  }
+  
+  .uploadButton {
+    background-color: #4f46e5; /* Indigo-600 */
+    color: white;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .uploadButton:hover {
+    background-color: #4338ca; /* Indigo-700 */
+    transform: scale(1.02);
+  }
+
+  .imageSec{
+    margin-bottom: 15px;
+  }

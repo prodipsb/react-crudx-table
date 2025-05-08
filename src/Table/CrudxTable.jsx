@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillDelete, AiFillEye, AiOutlinePlusCircle } from "react-icons/ai";
-import { FaUserSecret } from "react-icons/fa";
 import { TbEdit } from "react-icons/tb";
 import { VscSettings } from "react-icons/vsc";
-import styles from "./CrudxTable.module.css"; // ✅ Import as styles
+
+import styles from "./CrudxTable.module.css";
+
 import ViewModal from "../Components/Modals/View/ViewModal";
 import EditModal from "../Components/Modals/Edit/EditModal";
 import DeleteModal from "../Components/Modals/Delete/DeleteModal";
 import SmartFilter from "../Components/Filters/SmartFilter/SmartFilter";
 import SmartButton from "../Components/Buttons/SmartBtn/SmartBtn";
 import Pagination from "./Pagination/Pagination";
+
+// Optional: map string keys to icons if customBtn.icon is a string
+const iconMap = {
+  AiFillDelete,
+  AiFillEye,
+  AiOutlinePlusCircle,
+  TbEdit,
+  VscSettings,
+};
 
 const CrudxTable = ({
   columns,
@@ -36,7 +46,7 @@ const CrudxTable = ({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const closeView = () => {
+    const closeView = () => {
     setIsViewOpen(false);
     setSelectedItem(null);
   };
@@ -51,25 +61,38 @@ const CrudxTable = ({
     setIsDeleteOpen(false);
   };
 
-  const handleClick = (name, data) => {
-    if (name === "view") {
-      setSelectedItem(data);
-      setIsViewOpen(true);
-    }
-    if (name === "edit") {
-      setSelectedItem(data);
-      setIsEditOpen(true);
-      setFormData(data);
-    }
-    if (name === "delete") {
-      setSelectedItem(data);
-      setIsDeleteOpen(true);
-    }
-    if (name === "role") {
-      setSelectedItem(data);
-      // Handle assign role logic here if needed
+  const handleClick = (name, data = null) => {
+    setSelectedItem(data);
+    switch (name) {
+      case "view":
+        setIsViewOpen(true);
+        setSelectedItem(data);
+        break;
+      case "edit":
+        setIsEditOpen(true);
+        if (data){ 
+          setFormData(data); 
+          setSelectedItem(data);
+        }
+        break;
+      case "delete":
+        setIsDeleteOpen(true);
+        setSelectedItem(data);
+        break;
+      case "role":
+        // Add role handling logic here
+        break;
+      default:
+        break;
     }
   };
+
+  const IconRenderer = ({ Icon, action, tableData }) =>
+    Icon ? (
+      <span className={styles.customActionIcon}>
+        <Icon size={20} onClick={() => handleClick(action, tableData)} />
+      </span>
+    ) : null;
 
   return (
     <div className={styles.customTableWrapper}>
@@ -101,72 +124,80 @@ const CrudxTable = ({
             </tr>
           </thead>
           <tbody>
-            {data?.map((tableData, index) => (
-              <tr key={index} className={index % 2 === 0 ? styles.altRow : ""}>
-                {columns?.map((column, i) => (
-                  <td key={i}>
-                    {column?.type == 'image' ? (
+            {data?.map((tableData, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className={rowIndex % 2 === 0 ? styles.altRow : ""}
+              >
+                {columns?.map((column, colIndex) => {
+                  const cellValue = tableData?.[column?.key];
 
-                    <img src={tableData[column?.key]} width={column?.width} height={column?.height} className={column?.class}/>
-                     
-                    ) : (
+                  return (
+                    <td key={colIndex}>
+                      {column?.type === "image" ? (
+                        <img
+                          src={column.baseUrl + "/" + cellValue}
+                          width={column?.width}
+                          height={column?.height}
+                          className={column?.class}
+                          alt="cell"
+                        />
+                      ) : (
+                        <p className={styles.capitalize}>
+                          {typeof cellValue === "boolean"
+                            ? cellValue
+                              ? "Active"
+                              : "Inactive"
+                            : cellValue}
+                        </p>
+                      )}
 
-                      <p className={styles.capitalize}>
-                      {tableData[column?.key]}
-                    </p>
-
-                    )}
-                    
-                  
-                    
-                    {column?.key === "action" && (
-                      <div className={styles.customActionButtons}>
-                        {settingBtn && (
-                          <span className={styles.customActionIcon}>
-                            <VscSettings
-                              size={20}
-                              onClick={() => handleClick("settings", tableData)}
+                      {column?.key === "action" && (
+                        <div className={styles.customActionButtons}>
+                          {settingBtn && (
+                            <IconRenderer
+                              Icon={VscSettings}
+                              action="settings"
+                              tableData={tableData}
                             />
-                          </span>
-                        )}
-                        {viewBtn && (
-                          <span className={styles.customActionIcon}>
-                            <AiFillEye
-                              size={20}
-                              onClick={() => handleClick("view", tableData)}
+                          )}
+                          {viewBtn && (
+                            <IconRenderer
+                              Icon={AiFillEye}
+                              action="view"
+                              tableData={tableData}
                             />
-                          </span>
-                        )}
-                        {editBtn && (
-                          <span className={styles.customActionIcon}>
-                            <TbEdit
-                              size={20}
-                              onClick={() => handleClick("edit", tableData)}
+                          )}
+                          {editBtn && (
+                            <IconRenderer
+                              Icon={TbEdit}
+                              action="edit"
+                              tableData={tableData}
                             />
-                          </span>
-                        )}
-                        {deleteBtn && (
-                          <span className={styles.customActionIcon}>
-                            <AiFillDelete
-                              size={20}
-                              onClick={() => handleClick("delete", tableData)}
+                          )}
+                          {deleteBtn && (
+                            <IconRenderer
+                              Icon={AiFillDelete}
+                              action="delete"
+                              tableData={tableData}
                             />
-                          </span>
-                        )}
-                        {customBtn && customBtn.icon && (
-                          <span className={styles.customActionIcon}>
-                            <customBtn.icon
-                              size={20}
-                              onClick={() =>
-                                handleClick(customBtn.action, tableData)
+                          )}
+                          {customBtn?.icon && (
+                            <IconRenderer
+                              Icon={
+                                typeof customBtn.icon === "string"
+                                  ? iconMap[customBtn.icon]
+                                  : customBtn.icon
                               }
+                              action={customBtn.action}
+                              tableData={tableData}
                             />
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </td>
-                ))}
+                          )}
+                        </div>
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
