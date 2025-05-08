@@ -22,7 +22,6 @@ const Pagination = ({ pagination, fetchData }) => {
   };
 
   const handlePageClick = (page) => {
-    console.log('click page', page)
     updatePagination(page);
   };
 

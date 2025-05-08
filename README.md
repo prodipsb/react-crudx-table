@@ -53,7 +53,7 @@ Example:
   ];
 
 
-  const editFields = {
+  const formFields = {
     label: "Offer Details",
     fields: [
       { key: "productId", label: "Product ID", type: "text", required: true },
@@ -76,7 +76,7 @@ Example:
   }
 
 
-  const headers = [
+  const columns = [
     { key: "productId", label: "Product ID" },
     { key: "packType", label: "Pack Type" },
     { key: "banglaShort", label: "Bangla Short" },
@@ -102,7 +102,6 @@ import 'react-crudx-table/dist/styles.css';
 const ExamplePage = () => {
 
   const [offers, setOffers] = useState([]); 
-  const [modalStatus, setModalStatus] = useState([]); 
 
   const [filters, setFilters] = useState({
     productId: '',
@@ -156,12 +155,13 @@ const ExamplePage = () => {
   ];
 
 
-  const editFields = {
+  const formFields = {
     label: "Offer Details",
     fields: [
       { key: "productId", label: "Product ID", type: "text", required: true },
       { key: "packType", label: "Pack Type", type: "select", options: packageDataTypes, required: true },
       { key: "banglaShort", label: "Bangla Short", type: "text", required: true },
+      { key: "productImage", label: "Product Image", type:"image", baseUrl: "http://localhost:8000", required: true }, // for image add this additional attribute
       { key: "englishShort", label: "English Short", type: "text", required: true },
       { key: "banglaLong", label: "Bangla Long", type: "textarea", rows: 2, required: false },
       { key: "englishLong", label: "English Long", type: "textarea", rows: 2, required: false },
@@ -179,9 +179,10 @@ const ExamplePage = () => {
   }
 
 
-  const headers = [
+  const columns = [
     { key: "productId", label: "Product ID" },
     { key: "packType", label: "Pack Type" },
+    { key: "productImage", label: "Product Image", type:"image", baseUrl: "http://localhost:8000", required: true }, // for image add this additional attribute
     { key: "banglaShort", label: "Bangla Short" },
     { key: "englishShort", label: "English Short" },
     { key: "status", label: "Status" },
@@ -190,7 +191,6 @@ const ExamplePage = () => {
 
     const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData);
     try {
 
         // handle your submit logic
@@ -215,24 +215,23 @@ const ExamplePage = () => {
     <div>
       <h1>Table Data</h1>
         <CrudxTable
-        headers={headers}
-        data={offers}
-        viewData
-        editData
-        deleteData
-        addData={{ label: "Add New" }}
-        modalStatus={false}
-        editFields={editFields}
-        formData={formData}
-        setFormData={setFormData}
-        handleSubmit={handleSubmit}
-        handleDeleteItem={handleDeleteItem}
-        filters={filters}
-        filterInputFields={filterInputFields}
-        handleFilterChange={handleFilterChange}
-        fetchData={fetchData}
-        pagination={pagination}
-      />
+          columns={columns}
+          data={offers}
+          addData={{ label: "Add New" }}
+          formFields={formFields}
+          filters={filters}
+          viewBtn
+          editBtn
+          deleteBtn
+          formData={formData}
+          setFormData={setFormData}
+          handleSubmit={handleSubmit}
+          handleDeleteItem={handleDeleteItem}
+          filterInputFields={filterInputFields}
+          handleFilterChange={handleFilterChange}
+          fetchData={fetchData}
+          pagination={pagination}
+        />
     </div>
   );
 };
@@ -248,8 +247,8 @@ export default ExamplePage;
 |-----------------|---------------------|-----------------------------------------------------------------------------|
 | `header`       | `Array`             | Array of column definitions, each containing `title` and `field`.            |
 | `data`          | `Array`             | Array of data objects to populate the table.                                 |
-| `editData`      | `Boolean`           | If `true`, allows editing of rows (default: `false`).                        |
-| `deleteData`     | `Boolean`           | If `true`, allows deleting rows (default: `false`).                          |
+| `editBtn`      | `Boolean`           | If `true`, allows editing of rows (default: `false`).                        |
+| `deleteBtn`     | `Boolean`           | If `true`, allows deleting rows (default: `false`).                          |
 | `handleSubmit`        | `Function`          | Callback function triggered when a row is edited.                            |
 | `handleDeleteItem`      | `Function`          | Callback function triggered when a row is deleted.                          |
 
