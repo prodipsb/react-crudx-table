@@ -3,6 +3,7 @@ import InputField from "../../FormElements/Input/InputField";
 import SelectGroup from "../../FormElements/Select/SelectGroup";
 import TextArea from "../../FormElements/Textarea/TextArea";
 import styles from "./SmartFilter.module.css";
+import DateFilter from "../../FormElements/Date/DateFilter";
 
 export default function SmartFilter({
   filters,
@@ -21,7 +22,9 @@ export default function SmartFilter({
                 label={formField?.label}
                 value={filters[formField?.key] ?? ""}
                 placeholder={formField?.label}
-                onChange={(e) => handleFilterChange(e.target.value, formField.key)}
+                onChange={(e) =>
+                  handleFilterChange(e.target.value, formField.key)
+                }
                 required={formField?.required}
               />
             )}
@@ -32,21 +35,25 @@ export default function SmartFilter({
                 name={formField?.key}
                 value={filters[formField?.key]}
                 options={formField?.options}
-                onChange={(e) => handleFilterChange(e.target.value, formField.key)}
+                onChange={(e) =>
+                  handleFilterChange(e.target.value, formField.key)
+                }
                 placeholder={formField?.label}
                 required={formField?.required}
               />
             )}
 
-            {formField?.type === "textarea" && (
-              <TextArea
+            {formField.type === "date" && (
+              <DateFilter
+                type={formField.type}
                 name={formField?.key}
-                value={filters[formField?.key]}
-                placeholder={formField?.label}
-                onChange={(e) => handleFilterChange(e.target.value, formField.key)}
-                rows={formField?.rows}
-                required={formField?.required}
                 label={formField?.label}
+                value={filters[formField?.key] ?? ""}
+                placeholder={formField?.label}
+                onChange={(e) =>
+                  handleFilterChange(e.target.value, formField.key)
+                }
+                required={formField?.required}
               />
             )}
           </div>

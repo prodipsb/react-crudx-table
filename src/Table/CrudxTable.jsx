@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiFillDelete, AiFillEye, AiOutlinePlusCircle } from "react-icons/ai";
 import { TbEdit } from "react-icons/tb";
 import { VscSettings } from "react-icons/vsc";
+import { MdAssignmentAdd } from "react-icons/md";
 
 import styles from "./CrudxTable.module.css";
 
@@ -11,6 +12,7 @@ import DeleteModal from "../Components/Modals/Delete/DeleteModal";
 import SmartFilter from "../Components/Filters/SmartFilter/SmartFilter";
 import SmartButton from "../Components/Buttons/SmartBtn/SmartBtn";
 import Pagination from "./Pagination/Pagination";
+import AssignModal from "../Components/Modals/Assign/AssignModal";
 
 // Optional: map string keys to icons if customBtn.icon is a string
 const iconMap = {
@@ -19,6 +21,7 @@ const iconMap = {
   AiOutlinePlusCircle,
   TbEdit,
   VscSettings,
+  MdAssignmentAdd,
 };
 
 const CrudxTable = ({
@@ -32,21 +35,35 @@ const CrudxTable = ({
   viewBtn,
   editBtn,
   deleteBtn,
-  settingBtn,
+  assignBtn,
   customBtn,
+  modalStatus,
   formData,
   setFormData,
+  checkFields,
   handleSubmit,
   handleDeleteItem,
+  handleAssignSubmition,
   fetchData,
   pagination,
 }) => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isAssignOpen, setIsAssignOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-    const closeView = () => {
+
+  useEffect(() => {
+    if (!modalStatus) {
+      setIsViewOpen(false);
+      setIsEditOpen(false);
+      setIsAssignOpen(false);
+      setIsDeleteOpen(false);
+    }
+  }, [modalStatus]);
+
+  const closeView = () => {
     setIsViewOpen(false);
     setSelectedItem(null);
   };
@@ -54,7 +71,13 @@ const CrudxTable = ({
   const closeEdit = () => {
     setIsEditOpen(false);
     setSelectedItem(null);
-    setFormData(null)
+    setFormData(null);
+  };
+
+  const closeAssign = () => {
+    setIsAssignOpen(false);
+    setSelectedItem(null);
+    setFormData(null);
   };
 
   const closeDelete = () => {
@@ -71,8 +94,8 @@ const CrudxTable = ({
         break;
       case "edit":
         setIsEditOpen(true);
-        if (data){ 
-          setFormData(data); 
+        if (data) {
+          setFormData(data);
           setSelectedItem(data);
         }
         break;
@@ -80,8 +103,9 @@ const CrudxTable = ({
         setIsDeleteOpen(true);
         setSelectedItem(data);
         break;
-      case "role":
-        // Add role handling logic here
+      case "assign-permissions":
+        setIsAssignOpen(true);
+        setSelectedItem(data);
         break;
       default:
         break;
@@ -103,7 +127,7 @@ const CrudxTable = ({
             <SmartButton
               label={addData.label}
               onClick={() => handleClick("edit")}
-              icon={<AiOutlinePlusCircle size={20} />}
+              icon={<AiOutlinePlusCircle size={15} />}
               isLink={false}
               className="bg-meta-3"
             />
@@ -155,13 +179,6 @@ const CrudxTable = ({
 
                       {column?.key === "action" && (
                         <div className={styles.customActionButtons}>
-                          {settingBtn && (
-                            <IconRenderer
-                              Icon={VscSettings}
-                              action="settings"
-                              tableData={tableData}
-                            />
-                          )}
                           {viewBtn && (
                             <IconRenderer
                               Icon={AiFillEye}
@@ -180,6 +197,13 @@ const CrudxTable = ({
                             <IconRenderer
                               Icon={AiFillDelete}
                               action="delete"
+                              tableData={tableData}
+                            />
+                          )}
+                          {assignBtn && (
+                            <IconRenderer
+                              Icon={MdAssignmentAdd}
+                              action="assign-permissions"
                               tableData={tableData}
                             />
                           )}
@@ -234,6 +258,18 @@ const CrudxTable = ({
             isDeleteOpen={isDeleteOpen}
             closeDelete={closeDelete}
             onDelete={handleDeleteItem}
+          />
+        )}
+
+        {isAssignOpen && (
+          <AssignModal
+            selectedItem={selectedItem}
+            isAssignOpen={isAssignOpen}
+            closeAssign={closeAssign}
+            handleSubmit={handleAssignSubmition}
+            formData={formData}
+            checkFields={checkFields}
+            setFormData={setFormData}
           />
         )}
       </div>
