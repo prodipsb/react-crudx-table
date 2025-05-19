@@ -3,6 +3,7 @@ import { AiFillDelete, AiFillEye, AiOutlinePlusCircle } from "react-icons/ai";
 import { TbEdit } from "react-icons/tb";
 import { VscSettings } from "react-icons/vsc";
 import { MdAssignmentAdd } from "react-icons/md";
+import { FaFileExport } from "react-icons/fa";
 
 import styles from "./CrudxTable.module.css";
 
@@ -22,6 +23,7 @@ const iconMap = {
   TbEdit,
   VscSettings,
   MdAssignmentAdd,
+  FaFileExport
 };
 
 const CrudxTable = ({
@@ -37,6 +39,7 @@ const CrudxTable = ({
   deleteBtn,
   assignBtn,
   customBtn,
+  exportBtn,
   modalStatus,
   formData,
   setFormData,
@@ -53,9 +56,8 @@ const CrudxTable = ({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-
   useEffect(() => {
-    if (!modalStatus) {
+    if (modalStatus) {
       setIsViewOpen(false);
       setIsEditOpen(false);
       setIsAssignOpen(false);
@@ -112,10 +114,14 @@ const CrudxTable = ({
     }
   };
 
-  const IconRenderer = ({ Icon, action, tableData }) =>
+  const IconRenderer = ({ Icon, action, tableData, title }) =>
     Icon ? (
       <span className={styles.customActionIcon}>
-        <Icon size={20} onClick={() => handleClick(action, tableData)} />
+        <Icon
+          size={20}
+          title={title || action}
+          onClick={() => handleClick(action, tableData)}
+        />
       </span>
     ) : null;
 
@@ -140,6 +146,18 @@ const CrudxTable = ({
           handleFilterChange={handleFilterChange}
         />
 
+        {exportBtn && (
+          <div className={styles.addButtonContainer}>
+          <SmartButton
+            label={exportBtn.label}
+            onClick={() => handleFilterChange(true, "exportData")}
+            icon={<FaFileExport size={15} />}
+            isLink={false}
+            className="bg-red-600"
+          />
+           </div>
+        )}
+
         <table className={styles.customTable}>
           <thead>
             <tr>
@@ -155,7 +173,9 @@ const CrudxTable = ({
                 className={rowIndex % 2 === 0 ? styles.altRow : ""}
               >
                 {columns?.map((column, colIndex) => {
-                  const cellValue = tableData?.[column?.key];
+                  const getValueByKey = (obj, key) =>
+                    key.split(".").reduce((o, k) => o?.[k], obj);
+                  const cellValue = getValueByKey(tableData, column?.key);
 
                   return (
                     <td key={colIndex}>
@@ -180,43 +200,68 @@ const CrudxTable = ({
                       {column?.key === "action" && (
                         <div className={styles.customActionButtons}>
                           {viewBtn && (
-                            <IconRenderer
-                              Icon={AiFillEye}
-                              action="view"
-                              tableData={tableData}
-                            />
+                            <div className={styles.iconWithLabel}>
+                              <IconRenderer
+                                Icon={AiFillEye}
+                                action="view"
+                                tableData={tableData}
+                                title="View"
+                              />
+                              <span className={styles.iconLabel}>View</span>{" "}
+                              {/* 👁️ V */}
+                            </div>
                           )}
                           {editBtn && (
-                            <IconRenderer
-                              Icon={TbEdit}
-                              action="edit"
-                              tableData={tableData}
-                            />
+                            <div className={styles.iconWithLabel}>
+                              <IconRenderer
+                                Icon={TbEdit}
+                                action="edit"
+                                tableData={tableData}
+                                title="Edit"
+                              />
+                              <span className={styles.iconLabel}>Edit</span>{" "}
+                              {/* ✏️ E */}
+                            </div>
                           )}
                           {deleteBtn && (
-                            <IconRenderer
-                              Icon={AiFillDelete}
-                              action="delete"
-                              tableData={tableData}
-                            />
+                            <div className={styles.iconWithLabel}>
+                              <IconRenderer
+                                Icon={AiFillDelete}
+                                action="delete"
+                                tableData={tableData}
+                                title="Delete"
+                              />
+                              <span className={styles.iconLabel}>Del</span>{" "}
+                              {/* 🗑️ D */}
+                            </div>
                           )}
                           {assignBtn && (
-                            <IconRenderer
-                              Icon={MdAssignmentAdd}
-                              action="assign-permissions"
-                              tableData={tableData}
-                            />
+                            <div className={styles.iconWithLabel}>
+                              <IconRenderer
+                                Icon={MdAssignmentAdd}
+                                action="assign-permissions"
+                                tableData={tableData}
+                                title="Assign Roles"
+                              />
+                              <span className={styles.iconLabel}>Assign</span>{" "}
+                              {/* A */}
+                            </div>
                           )}
                           {customBtn?.icon && (
-                            <IconRenderer
-                              Icon={
-                                typeof customBtn.icon === "string"
-                                  ? iconMap[customBtn.icon]
-                                  : customBtn.icon
-                              }
-                              action={customBtn.action}
-                              tableData={tableData}
-                            />
+                            <div className={styles.iconWithLabel}>
+                              <IconRenderer
+                                Icon={
+                                  typeof customBtn.icon === "string"
+                                    ? iconMap[customBtn.icon]
+                                    : customBtn.icon
+                                }
+                                action={customBtn.action}
+                                tableData={tableData}
+                              />
+                              <span className={styles.iconLabel}>
+                                {customBtn.label || "Act"}
+                              </span>
+                            </div>
                           )}
                         </div>
                       )}

@@ -59,6 +59,7 @@ Example:
       { key: "productId", label: "Product ID", type: "text", required: true },
       { key: "packType", label: "Pack Type", type: "select", options: packageDataTypes, required: true },
       { key: "banglaShort", label: "Bangla Short", type: "text", required: true },
+      { key: "productImage", label: "Product Image", type:"image", baseUrl: "http://localhost:8000", width:200, height:100,required: true }, // for image add this additional attribute
       { key: "englishShort", label: "English Short", type: "text", required: true },
       { key: "banglaLong", label: "Bangla Long", type: "textarea", rows: 2, required: false },
       { key: "englishLong", label: "English Long", type: "textarea", rows: 2, required: false },
@@ -71,7 +72,8 @@ Example:
     fields: [
       { key: "productId", label: "Filter by Product ID", type: "text", required: false },
       { key: "packType", label: "Select Pack Type", type: "select", options: packageDataTypes, required: false },
-      { key: "status", label: "Select Status", type: "select", options: statusData, required: true },
+      { key: "status", label: "Select Status", type: "select", options: statusData, required: false },
+      { key: "startDate", label: "Date Filter", type: "date", required: false },
     ]
   }
 
@@ -79,6 +81,7 @@ Example:
   const columns = [
     { key: "productId", label: "Product ID" },
     { key: "packType", label: "Pack Type" },
+    { key: "productImage", label: "Product Image", type:"image", width: 200, height: 100, baseUrl: "http://localhost:8000", required: true }, // for image add this additional attribute
     { key: "banglaShort", label: "Bangla Short" },
     { key: "englishShort", label: "English Short" },
     { key: "status", label: "Status" },
@@ -224,6 +227,7 @@ const ExamplePage = () => {
           viewBtn
           editBtn
           deleteBtn
+          exportBtn={{label: "Export"}}
           formData={formData}
           setFormData={setFormData}
           handleSubmit={handleSubmit}

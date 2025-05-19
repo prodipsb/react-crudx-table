@@ -3,6 +3,7 @@ import styles from './Pagination.module.css'; // Import the custom CSS module
 
 const Pagination = ({ pagination, fetchData }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = pagination?.totalPages || 1;
 
   const updatePagination = (page) => {
     setCurrentPage(page);
@@ -16,7 +17,7 @@ const Pagination = ({ pagination, fetchData }) => {
   };
 
   const nextPage = () => {
-    if (currentPage < pagination?.totalPages) {
+    if (currentPage < totalPages) {
       updatePagination(currentPage + 1);
     }
   };
@@ -28,6 +29,35 @@ const Pagination = ({ pagination, fetchData }) => {
   useEffect(() => {
     fetchData(currentPage);
   }, [currentPage]);
+
+  const getPageNumbers = () => {
+    const range = [];
+    const delta = 2;
+
+    const showLeftDots = currentPage > delta + 2;
+    const showRightDots = currentPage < totalPages - delta - 1;
+
+    range.push(1);
+
+    if (showLeftDots) {
+      range.push("...");
+    }
+
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i);
+    }
+
+    if (showRightDots) {
+      range.push("...");
+    }
+
+    if (totalPages > 1) {
+      range.push(totalPages);
+    }
+
+    return range;
+  };
+
 
   return (
     <div className={styles.paginationContainer}>
@@ -43,30 +73,31 @@ const Pagination = ({ pagination, fetchData }) => {
           <span>Previous</span>
         </button>
 
-        <span className={styles.pageInfo}>
-          Page {currentPage} of {pagination?.totalPages}
+         <span className={styles.pageInfo}>
+          Page {currentPage} of {totalPages}
         </span>
 
-        <ul className={styles.pageNumberList}>
-          {[...Array(pagination?.totalPages).keys()].map((page) => {
-            const pageNumber = page + 1;
-            return (
-              <li key={page}>
+                <ul className={styles.pageNumberList}>
+          {getPageNumbers().map((item, index) => (
+            <li key={index}>
+              {item === "..." ? (
+                <span className={styles.ellipsis}>...</span>
+              ) : (
                 <button
-                  className={`${styles.pageNumberItem} ${pageNumber === currentPage ? styles.active : ''}`}
-                  onClick={() => handlePageClick(pageNumber)}
+                  className={`${styles.pageNumberItem} ${item === currentPage ? styles.active : ''}`}
+                  onClick={() => handlePageClick(item)}
                 >
-                  {pageNumber}
+                  {item}
                 </button>
-              </li>
-            );
-          })}
+              )}
+            </li>
+          ))}
         </ul>
 
-        <button
-          className={`${styles.paginationButton} ${currentPage === pagination?.totalPages ? styles.disabled : ''}`}
+          <button
+          className={`${styles.paginationButton} ${currentPage === totalPages ? styles.disabled : ''}`}
           onClick={nextPage}
-          disabled={currentPage === pagination?.totalPages}
+          disabled={currentPage === totalPages}
         >
           <span>Next</span>
           <svg className={styles.arrowIcon} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -17,12 +17,33 @@ const EditModal = ({
 }) => {
   const handleInputChange = (e) => {
     const { name, value, files, type } = e.target;
-    const newValue = type === "file" ? (files.length > 1 ? [...files] : files[0]) : value
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: newValue,
-    }));
+    const newValue =
+      type === "file" ? (files.length > 1 ? [...files] : files[0]) : value;
+    // setFormData((prevData) => ({
+    //   ...prevData,
+    //   [name]: name == 'role.id' ? formData?.role?.id = parseInt(newValue) : newValue,
+    // }));
+
+    setFormData((prevData) => {
+      if (name === "role.id") {
+        return {
+          ...prevData,
+          role: {
+            ...prevData.role,
+            id: parseInt(newValue),
+          },
+        };
+      }
+
+      return {
+        ...prevData,
+        [name]: newValue,
+      };
+    });
   };
+
+  const getValueByKey = (obj, key) =>
+    key.split(".").reduce((o, k) => o?.[k], obj);
 
   return (
     <>
@@ -37,46 +58,52 @@ const EditModal = ({
               <h4 className={styles.editModalTitle}>{formFields?.label}</h4>
 
               <div className={styles.editModalGrid}>
-                {formFields?.fields?.map((formField, index) => {
-                  const sharedProps = {
-                    key: index,
-                    name: formField?.key,
-                    value: formData?.[formField?.key] ?? "",
-                    placeholder: formField?.label,
-                    onChange: handleInputChange,
-                    required: formField?.required,
-                    label: formField?.label,
-                  };
+                {formFields?.fields
+                  ?.filter((formField) =>
+                    formData?.id ? formField.edit !== false : true
+                  )
+                  ?.map((formField, index) => {
+                    const sharedProps = {
+                      key: index,
+                      name: formField?.key,
+                      value: formData?.id
+                        ? getValueByKey(formData, formField?.key)
+                        : formData?.[formField?.key],
+                      placeholder: formField?.label,
+                      onChange: handleInputChange,
+                      required: formField?.required,
+                      label: formField?.label,
+                    };
 
-                  return (
-                    <div className={styles.editModalField} key={index}>
-                      {formField?.type === "text" && (
-                        <InputField type="text" {...sharedProps} />
-                      )}
-                      {formField?.type === "select" && (
-                        <SelectGroup
-                          {...sharedProps}
-                          options={formField?.options}
-                        />
-                      )}
-                      {formField?.type === "textarea" && (
-                        <TextArea rows={formField?.rows} {...sharedProps} />
-                      )}
-                      {formField?.type === "image" && (
-                        <FileUploadField
-                          name={formField?.key}
-                          label={formField?.label}
-                          required={formField?.required}
-                          value={formData?.[formField?.key] ?? ""}
-                          baseUrl={formField?.baseUrl ?? ""}
-                          onChange={handleInputChange}
-                          accept={formField?.accept || "*"}
-                          multiple={formField?.multiple || false}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+                    return (
+                      <div className={styles.editModalField} key={index}>
+                        {formField?.type === "text" && (
+                          <InputField type="text" {...sharedProps} />
+                        )}
+                        {formField?.type === "select" && (
+                          <SelectGroup
+                            {...sharedProps}
+                            options={formField?.options}
+                          />
+                        )}
+                        {formField?.type === "textarea" && (
+                          <TextArea rows={formField?.rows} {...sharedProps} />
+                        )}
+                        {formField?.type === "image" && (
+                          <FileUploadField
+                            name={formField?.key}
+                            label={formField?.label}
+                            required={formField?.required}
+                            value={formData?.[formField?.key] ?? ""}
+                            baseUrl={formField?.baseUrl ?? ""}
+                            onChange={handleInputChange}
+                            accept={formField?.accept || "*"}
+                            multiple={formField?.multiple || false}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
 
               <div className={styles.editModalFooter}>
