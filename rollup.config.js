@@ -22,15 +22,17 @@ export default {
   plugins: [
     peerDepsExternal(),
     resolve({
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', '.css'], // Added .css
     }),
     commonjs(),
     postcss({
-      modules: true,
-      extract: 'styles.css',
+      modules: {
+        generateScopedName: '[name]__[local]___[hash:base64:5]', // CSS modules pattern
+      },
+      extract: false, // ← CHANGED: Keep CSS as JS modules
+      inject: true, // ← CHANGED: Inject CSS into JS
       minimize: true,
       sourceMap: true,
-      plugins: [],
     }),
     babel({
       exclude: 'node_modules/**',

@@ -15,21 +15,19 @@ const EditModal = ({
   formData,
   setFormData,
 }) => {
+  const [errors, setErrors] = React.useState({});
+
   const handleInputChange = (e) => {
     const { name, value, files, type } = e.target;
     const newValue =
       type === "file" ? (files.length > 1 ? [...files] : files[0]) : value;
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   [name]: name == 'role.id' ? formData?.role?.id = parseInt(newValue) : newValue,
-    // }));
 
     setFormData((prevData) => {
       if (name === "role.id") {
         return {
           ...prevData,
           role: {
-            ...prevData.role,
+            ...prevData?.role,
             id: parseInt(newValue),
           },
         };
@@ -42,8 +40,51 @@ const EditModal = ({
     });
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+
+    formFields.fields.forEach((field) => {
+      // ❗ Skip validation if field.edit === false AND we are in edit mode
+      if (formData?.id && field.edit === false) {
+        return; // skip this field
+      }
+
+      // validate required fields
+      if (field.required) {
+        const value = field.key.includes(".")
+          ? getValueByKey(formData, field.key)
+          : formData[field.key];
+
+        const isEmpty =
+          value === undefined ||
+          value === null ||
+          value === "" ||
+          (Array.isArray(value) && value.length === 0);
+
+        if (isEmpty) {
+          newErrors[field.key] = `${field.label} is required`;
+        }
+      }
+    });
+
+    return newErrors;
+  };
+
   const getValueByKey = (obj, key) =>
     key.split(".").reduce((o, k) => o?.[k], obj);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    handleSubmit(e);
+  };
 
   return (
     <>
@@ -54,7 +95,7 @@ const EditModal = ({
           <div className={styles.editModalContainer}>
             <CloseBtn onClick={closeEdit} />
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
               <h4 className={styles.editModalTitle}>{formFields?.label}</h4>
 
               <div className={styles.editModalGrid}>
@@ -66,7 +107,7 @@ const EditModal = ({
                     const sharedProps = {
                       key: index,
                       name: formField?.key,
-                      value: formData?.id
+                      value: formField?.key.includes(".")
                         ? getValueByKey(formData, formField?.key)
                         : formData?.[formField?.key],
                       placeholder: formField?.label,
@@ -78,28 +119,49 @@ const EditModal = ({
                     return (
                       <div className={styles.editModalField} key={index}>
                         {formField?.type === "text" && (
-                          <InputField type="text" {...sharedProps} />
+                          <InputField
+                            type="text"
+                            {...sharedProps}
+                            className={
+                              errors[formField.key] ? styles.errorInput : ""
+                            }
+                          />
                         )}
+
                         {formField?.type === "select" && (
                           <SelectGroup
                             {...sharedProps}
                             options={formField?.options}
+                            className={
+                              errors[formField.key] ? styles.errorInput : ""
+                            }
                           />
                         )}
+
                         {formField?.type === "textarea" && (
-                          <TextArea rows={formField?.rows} {...sharedProps} />
+                          <TextArea
+                            rows={formField?.rows}
+                            {...sharedProps}
+                            className={
+                              errors[formField.key] ? styles.errorInput : ""
+                            }
+                          />
                         )}
+
                         {formField?.type === "image" && (
                           <FileUploadField
-                            name={formField?.key}
-                            label={formField?.label}
-                            required={formField?.required}
-                            value={formData?.[formField?.key] ?? ""}
-                            baseUrl={formField?.baseUrl ?? ""}
-                            onChange={handleInputChange}
-                            accept={formField?.accept || "*"}
-                            multiple={formField?.multiple || false}
+                            {...sharedProps}
+                            className={
+                              errors[formField.key] ? styles.errorInput : ""
+                            }
                           />
+                        )}
+
+                        {/* Display error message */}
+                        {errors[formField.key] && (
+                          <p className={styles.errorText}>
+                            {errors[formField.key]}
+                          </p>
                         )}
                       </div>
                     );
@@ -118,7 +180,7 @@ const EditModal = ({
                 <SmartButton
                   label="Save Changes"
                   type="submit"
-                  onClick={handleSubmit}
+                  onClick={onSubmit}
                   isLink={false}
                   className={styles.editSaveBtn}
                 />

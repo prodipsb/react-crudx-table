@@ -77,3 +77,13 @@
   background-color: #10b981;
   color: white;
 }
+
+.errorText {
+  color: #e63946;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.errorInput {
+  border-color: #e63946 !important;
+}

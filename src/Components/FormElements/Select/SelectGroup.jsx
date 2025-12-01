@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SelectGroup.module.css"; // Correct import using CSS Modules
+import styles from "./SelectGroup.module.css";
 
 const SelectGroup = ({
   label,
@@ -27,8 +27,8 @@ const SelectGroup = ({
           <option value="" disabled>
             {placeholder}
           </option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
+          {options.map((option, i) => (
+            <option key={i} value={option.value}>
               {option.label}
             </option>
           ))}

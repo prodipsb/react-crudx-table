@@ -2,15 +2,26 @@
 .paginationContainer {
   border: 1px solid #e5e7eb;
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .paginationWrapper {
   display: flex;
+  justify-content: space-between; /* NEW */
   align-items: center;
-  justify-content: flex-end;
+  width: 100%;
   gap: 2rem;
   padding: 1rem 0;
 }
+
+.paginationControls{
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 
 .paginationButton {
   display: flex;
@@ -22,7 +33,7 @@
   border-radius: 8px;
   border: 1px solid #d1d5db;
   background-color: white;
-  color: #636c72;
+  color: #636c72 !important;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
@@ -40,30 +51,46 @@
 .pageNumberList {
   display: flex;
   gap: 0.25rem;
+  list-style: none;
 }
 
 .pageNumberItem {
-  width: 2.5rem;
+  min-width: 3.5rem;
   height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #4b5563;
+  color: #4b5563 !important;
   border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: white;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .pageNumberItem.active {
   background-color: #3b82f6;
-  color: white;
+  color: white !important;
 }
 
 .pageNumberItem:hover:not(.active) {
   background-color: #e0e7ff;
   color: #3b82f6;
+}
+
+.paginationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.totalRecords {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4b5563 !important;
 }
 
 .pageInfo {
@@ -76,3 +103,26 @@
   height: 1.25rem;
   fill: currentColor;
 }
+
+.ellipsis {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+}
+@media screen and (max-width: 600px) {
+  .paginationWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .leftInfo {
+    margin-bottom: 0.5rem;
+  }
+}
+

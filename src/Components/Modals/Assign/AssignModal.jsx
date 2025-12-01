@@ -68,7 +68,7 @@ const AssignModal = ({
 
               <div className={styles.assignModalGrid}>
                 
-                {checkFields.map((checkField, index) => (
+                {checkFields?.map((checkField, index) => (
                   <div className={styles.editModalField} key={index}>
                     <CheckboxField
                       name={'checkFields'}

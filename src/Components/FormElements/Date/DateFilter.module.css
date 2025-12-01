@@ -28,6 +28,10 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.inputElement::-webkit-calendar-picker-indicator {
+  filter: invert(40%) sepia(80%) saturate(500%) hue-rotate(200deg);
+}
+
 .inputElement:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 0 1px #3b82f6;

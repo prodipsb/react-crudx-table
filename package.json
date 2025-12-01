@@ -1,16 +1,17 @@
 {
   "name": "react-crudx-table",
-  "version": "1.2.4",
+  "version": "1.3.0",
   "description": "Make npm CRUD design with this package simply",
   "author": "Prodip Roy",
   "license": "MIT",
   "type": "module",
+  "types": "index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "files": [
     "dist",
     "src",
-    "*.css"
+    "styles.css"
   ],
   "keywords": [
     "react",

@@ -14,8 +14,8 @@ import SmartFilter from "../Components/Filters/SmartFilter/SmartFilter";
 import SmartButton from "../Components/Buttons/SmartBtn/SmartBtn";
 import Pagination from "./Pagination/Pagination";
 import AssignModal from "../Components/Modals/Assign/AssignModal";
+import SortingFilter from "../Components/Filters/Sorting/Sortingfilter";
 
-// Optional: map string keys to icons if customBtn.icon is a string
 const iconMap = {
   AiFillDelete,
   AiFillEye,
@@ -40,7 +40,7 @@ const CrudxTable = ({
   assignBtn,
   customBtn,
   exportBtn,
-  modalStatus,
+  closeModal,
   formData,
   setFormData,
   checkFields,
@@ -57,13 +57,11 @@ const CrudxTable = ({
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    if (modalStatus) {
       setIsViewOpen(false);
       setIsEditOpen(false);
       setIsAssignOpen(false);
       setIsDeleteOpen(false);
-    }
-  }, [modalStatus]);
+  }, [closeModal]);
 
   const closeView = () => {
     setIsViewOpen(false);
@@ -157,6 +155,13 @@ const CrudxTable = ({
           />
            </div>
         )}
+
+        <SortingFilter
+          perPage={filters?.perPage}
+          sortOrder={filters?.sortOrder}
+          onPerPageChange={(value) => handleFilterChange(value, "perPage")}
+          onSortChange={(value) => handleFilterChange(value, "sortOrder")}
+        />
 
         <table className={styles.customTable}>
           <thead>
