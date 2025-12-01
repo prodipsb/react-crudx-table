@@ -111,7 +111,8 @@ const ExamplePage = () => {
     packType: '',
     status: '',
     page: 1,
-    pageSize: 10,
+    perPage: 10,
+    sortOrder: "DESC"
   });
   const [formData, setFormData] = useState({
     id: "",
@@ -135,8 +136,8 @@ const ExamplePage = () => {
     const { productId, packType, status, pageSize } = filters;
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/offers?page=${page}&pageSize=${pageSize}&productId=${productId}&packType=${packType}&status=${status}`);
     const result = await response.json();
-    setOffers(result.offers);
-    setPagination(result?.pagination);
+    setOffers(result.offers); // Array Object
+    setPagination(result?.pagination); // pagination: {currentPage: 1,totalPages: 12,totalRecords: 120,perPage: 10,}
   };
 
   // Handle filter changes
@@ -161,7 +162,7 @@ const ExamplePage = () => {
   const formFields = {
     label: "Offer Details",
     fields: [
-      { key: "productId", label: "Product ID", type: "text", required: true },
+      { key: "productId", label: "Product ID", type: "text", edit: false, required: true },
       { key: "packType", label: "Pack Type", type: "select", options: packageDataTypes, required: true },
       { key: "banglaShort", label: "Bangla Short", type: "text", required: true },
       { key: "productImage", label: "Product Image", type:"image", baseUrl: "http://localhost:8000", width:200, height:100,required: true }, // for image add this additional attribute
@@ -172,6 +173,8 @@ const ExamplePage = () => {
     ]
   };
 
+  // If you want to remove some fields when edit add extra attribute `edit: false`,
+
   const filterInputFields = {
     label: "Offer Filters",
     fields: [
@@ -181,6 +184,8 @@ const ExamplePage = () => {
       { key: "startDate", label: "Date Filter", type: "date", required: false },
     ]
   }
+
+  // You can change key as your own input name
 
 
   const columns = [
@@ -199,6 +204,11 @@ const ExamplePage = () => {
 
         // handle your submit logic
 
+        // after get response
+        setCloseModal(prev => !prev);
+        setFormData({});
+        // refresh the list item api
+
     } catch (error) {
       console.log('my error', error)
     }
@@ -209,7 +219,9 @@ const ExamplePage = () => {
 
     try {
       // handle your crud delete logic
-      // window.location.href = "/redirect"
+
+      setCloseModal(prev => !prev);
+      // refresh the list item api
     } catch (error) {
       console.error('Error deleting:', error);
     }
@@ -226,7 +238,8 @@ const ExamplePage = () => {
           filters={filters}
           viewBtn
           editBtn
-          deleteBtn
+          deleteBtn  // if you want to ser permission for action button `deleteBtn= {user.permissions?.includes('delete-users') ? true : false}`
+          closeModal={closeModal}
           exportBtn={{label: "Export"}}
           formData={formData}
           setFormData={setFormData}
@@ -322,13 +335,31 @@ const ExamplePage = () => {
       setLoading(false);
     };
 
+    const fetchData = async (page = 1) => {
+      const { name, status, perPage, sortOrder } = filters;
+      const params = {
+        name,
+        status,
+        page,
+        perPage,
+        sortOrder
+      };
+      
+      // send data to your backend api - you can use fetch or axios (get or post method)
+
+      setData(response.data);
+      setPagination(response?.pagination);
+      setLoading(false);
+
+    };
+
     fetchData();
   }, []);
 
   return (
     <div>
       <h1>Server Data List</h1>
-      {loading ? <p>Loading...</p> : <CrudxTable data={data} />}
+      {loading ? <p>Loading...</p> : <CrudxTable data={data} />}  
     </div>
   );
 };
