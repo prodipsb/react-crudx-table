@@ -107,13 +107,19 @@ const ExamplePage = () => {
   const [offers, setOffers] = useState([]); 
 
   const [filters, setFilters] = useState({
-    productId: '',
-    packType: '',
-    status: '',
+    callerId: "",
+    phone: "",
     page: 1,
     perPage: 10,
-    sortOrder: "DESC"
+    sortOrder: "desc",
+    dateFilter:{
+      type: "periodical",
+      days: null,
+      startDate: null,
+      endDate: null
+    }
   });
+
   const [formData, setFormData] = useState({
     id: "",
     productId: "",
@@ -126,8 +132,10 @@ const ExamplePage = () => {
   });
 
   const [pagination, setPagination] = useState(null);
+  const [searchTrigger, setSearchTrigger] = useState(false);
 
   useEffect(() => {
+    if (!searchTrigger) return;
     fetchData(1);
   }, [filters]);
 
@@ -181,7 +189,8 @@ const ExamplePage = () => {
       { key: "productId", label: "Filter by Product ID", type: "text", required: false },
       { key: "packType", label: "Select Pack Type", type: "select", options: packageDataTypes, required: false },
       { key: "status", label: "Select Status", type: "select", options: statusData, required: false },
-      { key: "startDate", label: "Date Filter", type: "date", required: false },
+  //    { key: "startDate", label: "Date Filter", type: "date", required: false },
+      { key: "dateFilter", label: "Date Filter", type: "dateRange", required: false },
     ]
   }
 
@@ -236,6 +245,9 @@ const ExamplePage = () => {
           addData={{ label: "Add New" }}
           formFields={formFields}
           filters={filters}
+          setFilters={setFilters}
+          searchTrigger={searchTrigger}
+          setSearchTrigger={setSearchTrigger}
           viewBtn
           editBtn
           deleteBtn  // if you want to ser permission for action button `deleteBtn= {user.permissions?.includes('delete-users') ? true : false}`
