@@ -1,0 +1,102 @@
+.container {
+  /* display: flex;
+  flex-direction: row; */
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151; /* gray-700 */
+}
+
+.label span {
+  color: #dc2626; /* red-600 */
+}
+
+.radioGroup {
+  display: flex;
+  gap: 20px;
+  margin-top: 4px;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #374151;
+}
+
+.radioGroup input[type="radio"] {
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.periodButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.periodButtons button {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid #d1d5db; /* gray-300 */
+  background-color: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.periodButtons button:hover {
+  background-color: #eff6ff; /* blue-50 */
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.periodButtons button:active {
+  background-color: #dbeafe; /* blue-100 */
+}
+
+.periodBtn:hover {
+  background: #f2f4f7;
+}
+
+.active {
+  background: #1677ff !important;
+  color: #fff !important;
+  border-color: #1677ff !important;
+}
+
+
+.customRow {
+  display: flex;
+  gap: 12px;
+}
+
+.customRow > div {
+  flex: 1;
+}
+
+@media (max-width: 640px) {
+  .radioGroup {
+    gap: 12px;
+  }
+
+  .periodButtons button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+   .customRow {
+    flex-direction: column;
+  }
+}
+
+

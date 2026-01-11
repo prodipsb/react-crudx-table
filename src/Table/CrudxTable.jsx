@@ -32,8 +32,11 @@ const CrudxTable = ({
   addData,
   formFields,
   filters,
+  setFilters,
   filterInputFields,
   handleFilterChange,
+  searchTrigger,
+  setSearchTrigger,
   viewBtn,
   editBtn,
   deleteBtn,
@@ -112,6 +115,20 @@ const CrudxTable = ({
     }
   };
 
+
+  const handleSearch = () => {
+    setSearchTrigger((prev) => !prev); // 🔄 trigger search
+  };
+
+  const handleReset = () => {
+    setFilters({
+      page: 1,
+      perPage: 10,
+      sortOrder: "desc",
+    });
+    setSearchTrigger((prev) => !prev);
+  };
+
   const IconRenderer = ({ Icon, action, tableData, title }) =>
     Icon ? (
       <span className={styles.customActionIcon}>
@@ -142,6 +159,8 @@ const CrudxTable = ({
           filters={filters}
           filterInputFields={filterInputFields}
           handleFilterChange={handleFilterChange}
+          onSearch={handleSearch}
+          onReset={handleReset}
         />
 
         {exportBtn && (
